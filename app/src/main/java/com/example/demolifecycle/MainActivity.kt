@@ -9,6 +9,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.OnLifecycleEvent
 
 class MainActivity : AppCompatActivity() {
     var score =0
@@ -27,33 +32,40 @@ class MainActivity : AppCompatActivity() {
             txt.text=""+score
         }
         Log.d("TESTLC","CREATED")
+        lifecycle.addObserver(MyObserver())
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt("score",score)
     }
-    override fun onStart() {
-        super.onStart()
-        Log.v("TESTLC","STARTED")
-        Log.i("TESTLC","STARTED")
-        Log.d("TESTLC","STARTED")
-        Log.e("TESTLC","STARTED")
-    }
-    override fun onResume(){
-        super.onResume()
-        Log.d("TESTLC","RESUMED")
-    }
-    override fun onPause(){
-        super.onPause()
-        Log.d("TESTLC","PAUSED")
-    }
-    override fun onStop(){
-        super.onStop()
-        Log.d("TESTLC","STOPPED")
-    }
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("TESTLC","DESTROYED")
+//    override fun onStart() {
+//        super.onStart()
+//        Log.v("TESTLC","STARTED")
+//        Log.i("TESTLC","STARTED")
+//        Log.d("TESTLC","STARTED")
+//        Log.e("TESTLC","STARTED")
+//    }
+//    override fun onResume(){
+//        super.onResume()
+//        Log.d("TESTLC","RESUMED")
+//    }
+//    override fun onPause(){
+//        super.onPause()
+//        Log.d("TESTLC","PAUSED")
+//    }
+//    override fun onStop(){
+//        super.onStop()
+//        Log.d("TESTLC","STOPPED")
+//    }
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        Log.d("TESTLC","DESTROYED")
+//    }
+}
+class MyObserver : DefaultLifecycleObserver {
+    override fun onStart(owner: LifecycleOwner) {
+        super.onStart(owner)
+        Log.d("TESTLC","STARTED LISTENING IN OBSERVER")
     }
 }
