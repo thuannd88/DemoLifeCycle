@@ -34,6 +34,8 @@ class MainActivity : AppCompatActivity() {
             R.layout.activity_main)
 
         binding.viewModel = viewModel
+        binding.lifecycleOwner=this//If you set lifecycleOwner to this Activity, you don't need
+        //to use score_Observer() anymore
 
         var btn = findViewById<Button>(R.id.btnInc)
         var txt = findViewById<TextView>(R.id.txtScore)
@@ -42,18 +44,22 @@ class MainActivity : AppCompatActivity() {
 //            txt.text=""+viewModel.score
 //        }
         binding.btnInc.setOnClickListener {
-            viewModel.score.value=viewModel.score.value+1
+            viewModel._score.value=viewModel._score.value+1
             //txt.text=""+viewModel.score
         }
         val score_Observer = Observer<Int> { newValue ->
             binding.txtScore.text = newValue.toString()
         }
-        viewModel.score.observe(this,score_Observer)
+
+       // viewModel.score.observe(this,score_Observer)
     }
 
 }
 class ScoreViewModel : ViewModel() {
-     var score= MutableLiveData<Int>(0)
+    val _score = MutableLiveData<Int>(0)
+    val score : LiveData<Int>
+        get() = _score
+
 }
 
 
